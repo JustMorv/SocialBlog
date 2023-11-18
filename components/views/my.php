@@ -1,0 +1,1 @@
+<h1 style="color:red">Lorem, ipsum dolor sit amet <strong style="color:black"><?=$name;?></strong>. Expedita, incidunt.</h1>
