@@ -10,6 +10,14 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
     public $authKey;
     public $accessToken;
 
+    public function rules()
+    {
+        return [
+            [['isAdmin'], 'integer'],
+            [['name', 'email', 'password', 'photo'], 'string', 'max' => 255],
+        ];
+    }
+
     private static $users = [
         '100' => [
             'id' => '100',
