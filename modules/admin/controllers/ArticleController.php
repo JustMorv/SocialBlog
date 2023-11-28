@@ -110,8 +110,8 @@ class ArticleController extends Controller
             $acticle = $this->findModel($id);
             $model->image = UploadedFile::getInstance($model, 'image');
 
-            if($acticle->saveImage($model->upload($model->image))){
-            };
+            $acticle->saveImage($model->upload($model->image));
+
         }
 
         return $this->render('image', ["model" => $model]);
