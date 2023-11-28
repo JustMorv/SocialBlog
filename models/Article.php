@@ -101,4 +101,9 @@ class Article extends \yii\db\ActiveRecord
     public function getCategory(){
         return $this->hasOne(Category::class, ['id' => 'category_id']);
     }
+
+    public function saveImage($image){
+        $this->image = $image;
+        return $this->save(false);
+    }
 }
