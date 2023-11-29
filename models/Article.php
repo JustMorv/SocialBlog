@@ -23,6 +23,8 @@ use Yii;
  */
 class Article extends \yii\db\ActiveRecord
 {
+    public $imageFile;
+
     /**
      * {@inheritdoc}
      */
@@ -37,12 +39,13 @@ class Article extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['description', 'content'],    'string'],
+            [['description', 'content'], 'string'],
             [['title'], 'required'],
-            [['date'], 'date', 'format'=>'php:Y-m-d'],
-            [['date'], 'default', 'value'=>date('Y-m-d')],
+            [['date'], 'date', 'format' => 'php:Y-m-d'],
+            [['date'], 'default', 'value' => date('Y-m-d')],
             [['viewed', 'status', 'user_id', 'category_id'], 'integer'],
-            [['title', 'image'], 'string', 'max' => 255],
+            [['title',], 'string', 'max' => 255],
+            [['imageFile'], 'file', 'extensions' => 'jpg,png']
         ];
     }
 
@@ -50,16 +53,16 @@ class Article extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' =>"Номер",
-            'title' =>"Заголовок",
-            'description' =>"контекст",
-            'content' =>'контент',
-            'date' =>'Дата',
-            'image' =>'картика',
-            'viewed' =>'просмотры',
-            'status' =>'статус',
-            'user_id' =>'привязка юзера',
-            'category_id' =>'привязка категории',
+            'id' => "Номер",
+            'title' => "Заголовок",
+            'description' => "контекст",
+            'content' => 'контент',
+            'date' => 'Дата',
+            'imageFile' => 'картика',
+            'viewed' => 'просмотры',
+            'status' => 'статус',
+            'user_id' => 'привязка юзера',
+            'category_id' => 'привязка категории',
         ];
     }
 
@@ -98,12 +101,25 @@ class Article extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Comment::class, ['article_id' => 'id']);
     }
+
     public function getCategory(){
         return $this->hasOne(Category::class, ['id' => 'category_id']);
     }
 
-    public function saveImage($image){
+
+    public function saveImage($image)
+    {
         $this->image = $image;
         return $this->save(false);
+    }
+
+    public function upload($image)
+    {
+        $this->image = $image;
+        $path = Yii::getAlias("@web") . 'upload/';
+        $this->image = strtolower(md5(uniqid($image->baseName))) . '.' . $image->extension;
+
+        $image->saveAs($path . $this->image);
+        $this->save(false);
     }
 }
