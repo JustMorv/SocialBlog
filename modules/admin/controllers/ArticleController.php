@@ -58,6 +58,7 @@ class ArticleController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -96,7 +97,13 @@ class ArticleController extends Controller
     {
         $model = $this->findModel($id);
 
+
+
+
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+
+            $model->upload($model->imageFile);
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

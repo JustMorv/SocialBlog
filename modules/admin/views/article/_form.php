@@ -20,13 +20,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'date')->textInput() ?>
 
-    <?= $form->field($model, 'image')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'imageFile')->fileInput() ?>
 
     <?= $form->field($model, 'viewed')->textInput() ?>
 
     <?= $form->field($model, 'status')->textInput() ?>
 
     <?= $form->field($model, 'user_id')->textInput() ?>
+
+<!--    --><?php //= Html::dropDownList('category', $model->category->id,[])?>
 
     <?= $form->field($model, 'category_id')->textInput() ?>
 

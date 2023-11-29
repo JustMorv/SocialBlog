@@ -1,6 +1,7 @@
 <?php
 
 namespace app\models;
+
 use app\models\Article;
 
 use Yii;
@@ -41,20 +42,25 @@ class Category extends \yii\db\ActiveRecord
             'id' => 'ID',
         ];
     }
+
     public function getArticle()
     {
-        return $this->hasMany(Article::className(), ['category_id' => 'id']);
+        return $this->hasMany(Article::class, ['category_id' => 'id']);
     }
 
-    public function getArticlesCount(){
+    public function getArticlesCount()
+    {
         return $this->getArticle()->count();
     }
 
-    public static function getAll(){
+    public static function getAll()
+    {
         return Category::find()->all();
     }
-    public static function getArticlesByCategory($category_id){
-        $query = Article::find()->where(["category_id"=> $category_id]);
+
+    public static function getArticlesByCategory($category_id)
+    {
+        $query = Article::find()->where(["category_id" => $category_id]);
         $count = $query->count();
         $pagination = new Pagination(['totalCount' => $count, 'pageSize' => 3]);
 
@@ -68,6 +74,5 @@ class Category extends \yii\db\ActiveRecord
         return $data;
 
 
-        
     }
 }

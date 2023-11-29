@@ -40,6 +40,7 @@ class ArticleSeacrh extends Article
      */
     public function search($params)
     {
+//        $query = Article::find()->with('category');
         $query = Article::find();
 
         // add conditions that should always apply here
