@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\forms\RegisterForm;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Response;
@@ -9,7 +10,6 @@ use yii\filters\VerbFilter;
 use app\models\forms\LoginForm;
 use yii\web\Controller;
 use Symfony\Component\VarDumper\VarDumper;
-use app\models\Country;
 
 
 class SiteController extends Controller
@@ -67,8 +67,8 @@ class SiteController extends Controller
 
 
         return $this->render('index',[
-         
-          
+
+
         ]);
     }
 
@@ -100,6 +100,26 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
+    public function actionRegister()
+    {
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $model = new RegisterForm();
+        if ($model->load(Yii::$app->request->post())) {
+            if($user = $model->register()){
+
+                if(Yii::$app->getUser()->login($user)){
+                    return $this->goHome();
+                }
+            }
+        }
+
+        return $this->render('register', [
+            'model' => $model,
+        ]);
+    }
 
     /**
      * Logout action.
@@ -118,44 +138,26 @@ class SiteController extends Controller
      *
      * @return Response|string
      */
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
-            return $this->refresh();
-        }
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
-    }
 
     /**
      * Displays about page.
      *
      * @return string
      */
-    public function actionAbout()
-    {
-        return $this->render('about');
-    }
-    public function actionHello(){
-        return $this->render("hello");
-    }
+
     public function actionEntry()
+    {
+        $model = new EntryForm();
+        if ($model->load(Yii::$app->request->post()) && $model->validate())
         {
-            $model = new EntryForm();
-            if ($model->load(Yii::$app->request->post()) && $model->validate())
-            {
             // данные в $model удачно проверены
             // делаем что-то полезное с $model ...
             return $this->render('entry-confirm', ['model' => $model]);
-            } else {
+        } else {
             // либо страница отображается первый раз, либо есть ошибка в
-            
+
             return $this->render('entry', ['model' => $model]);
-            }
         }
+    }
 
 }
