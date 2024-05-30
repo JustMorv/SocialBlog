@@ -108,7 +108,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 
     public function validateAuthKey($authKey)
     {
-        return $this->$authKey === $authKey;
+        return $this->getAuthKey() === $authKey;
     }
 
     public function validatePassword($password)
