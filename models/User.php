@@ -86,6 +86,10 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
 
     }
+    public static function findByEmailUser($email)
+    {
+        return static::findOne(['email' => $email ]);
+    }
 
     public function getId()
     {
