@@ -97,7 +97,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         return $this->authKey;
     }
 
-    public function findByUserName($username)
+    public static function findByUsername($username)
     {
         return static::findOne(['username' => $username]);
     }
