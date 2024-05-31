@@ -1,5 +1,6 @@
 <?php
 
+use app\models\User;
 use yii\bootstrap5\Html;
 use yii\widgets\DetailView;
 
@@ -42,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'category_id',
         ],
     ]) ?>
-
+    <?=\yii\helpers\VarDumper::dump(User::getUserInfo()->email, 10, 1)?>
     <?=Html::img('@web/upload/' . $model->image, ['class'=>'w-25'] ) ?>
 
 </div>
