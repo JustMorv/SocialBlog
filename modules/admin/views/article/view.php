@@ -1,6 +1,7 @@
 <?php
 
-use yii\helpers\Html;
+use app\models\User;
+use yii\bootstrap5\Html;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
@@ -26,6 +27,8 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
+
+
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
@@ -34,12 +37,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'description:ntext',
             'content:ntext',
             'date',
-            'image',
             'viewed',
             'status',
             'user_id',
             'category_id',
         ],
     ]) ?>
+    <?=\yii\helpers\VarDumper::dump(User::getUserInfo()->email, 10, 1)?>
+    <?=Html::img('@web/upload/' . $model->image, ['class'=>'w-25'] ) ?>
 
 </div>
