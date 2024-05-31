@@ -18,15 +18,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'date')->textInput() ?>
+<!--    --><?php //= $form->field($model, 'date')->textInput() ?>
 
     <?= $form->field($model, 'imageFile')->fileInput() ?>
 
-    <?= $form->field($model, 'viewed')->textInput() ?>
+<!--    --><?php //= $form->field($model, 'viewed')->textInput() ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
+<!--    --><?php //= $form->field($model, 'status')->textInput() ?>
 
-    <?= $form->field($model, 'user_id')->textInput() ?>
+<!--    --><?php //= $form->field($model, 'user_id')->textInput() ?>
 
     <!--    --><?php //= Html::dropDownList('category', $model->category->id,[])?>
 

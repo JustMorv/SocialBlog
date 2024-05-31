@@ -42,6 +42,9 @@ class Article extends \yii\db\ActiveRecord
             [['description', 'content'], 'string'],
             [['title'], 'required'],
             [['date'], 'date', 'format' => 'php:Y-m-d'],
+            [['user_id'], 'default', 'value' => Yii::$app->user->id],
+            [['status'], 'default', 'value' => 1],
+            [['viewed'], 'default', 'value' => 0],
             [['date'], 'default', 'value' => date('Y-m-d')],
             [['viewed', 'status', 'user_id', 'category_id'], 'integer'],
             [['title',], 'string', 'max' => 255],
@@ -50,37 +53,37 @@ class Article extends \yii\db\ActiveRecord
     }
 
 
+//    public function attributeLabels()
+//    {
+//        return [
+//            'id' => "Номер",
+//            'title' => "Заголовок",
+//            'description' => "контекст",
+//            'content' => 'контент',
+//            'date' => 'Дата',
+//            'imageFile' => 'картика',
+//            'viewed' => 'просмотры',
+//            'status' => 'статус',
+//            'user_id' => 'привязка юзера',
+//            'category_id' => 'привязка категории',
+//        ];
+//    }
+
     public function attributeLabels()
     {
         return [
-            'id' => "Номер",
-            'title' => "Заголовок",
-            'description' => "контекст",
-            'content' => 'контент',
-            'date' => 'Дата',
-            'imageFile' => 'картика',
-            'viewed' => 'просмотры',
-            'status' => 'статус',
-            'user_id' => 'привязка юзера',
-            'category_id' => 'привязка категории',
+            'id' => Yii::t("app", "Номер"),
+            'title' => Yii::t("app", "Заголовок"),
+            'description' => Yii::t("app", "контекст"),
+            'content' => Yii::t("app", 'контент'),
+            'date' => Yii::t("app", 'Дата'),
+            'image' => Yii::t("app", 'картика'),
+            'viewed' => Yii::t("app", 'просмотры'),
+            'status' => Yii::t("app", 'статус'),
+            'user_id' => Yii::t("app", 'привязка юзера'),
+            'category_id' => Yii::t("app", 'привязка категории'),
         ];
     }
-
-    // public function attributeLabels()
-    // {
-    //     return [
-    //         'id' => Yii::t("app", "Номер"),
-    //         'title' => Yii::t("app", "Заголовок"),
-    //         'description' => Yii::t("app", "контекст"),
-    //         'content' => Yii::t("app", 'контент'),
-    //         'date' => Yii::t("app", 'Дата'),
-    //         'image' => Yii::t("app", 'картика'),
-    //         'viewed' => Yii::t("app", 'просмотры'),
-    //         'status' => Yii::t("app", 'статус'),
-    //         'user_id' => Yii::t("app", 'привязка юзера'),
-    //         'category_id' => Yii::t("app", 'привязка категории'),
-    //     ];
-    // }
 
     /**
      * Gets query for [[ArticleTags]].
@@ -102,7 +105,8 @@ class Article extends \yii\db\ActiveRecord
         return $this->hasMany(Comment::class, ['article_id' => 'id']);
     }
 
-    public function getCategory(){
+    public function getCategory()
+    {
         return $this->hasOne(Category::class, ['id' => 'category_id']);
     }
 
