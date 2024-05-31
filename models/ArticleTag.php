@@ -42,9 +42,9 @@ class ArticleTag extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'article_id' => 'Article ID',
-            'tag_id' => 'Tag ID',
+            'id' =>Yii::t("app", 'ID'),
+            'article_id' => Yii::t("app",'Article ID'),
+            'tag_id' => Yii::t("app",'Tag ID'),
         ];
     }
 

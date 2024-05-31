@@ -50,37 +50,37 @@ class Article extends \yii\db\ActiveRecord
     }
 
 
-    public function attributeLabels()
-    {
-        return [
-            'id' => "Номер",
-            'title' => "Заголовок",
-            'description' => "контекст",
-            'content' => 'контент',
-            'date' => 'Дата',
-            'imageFile' => 'картика',
-            'viewed' => 'просмотры',
-            'status' => 'статус',
-            'user_id' => 'привязка юзера',
-            'category_id' => 'привязка категории',
-        ];
-    }
+//    public function attributeLabels()
+//    {
+//        return [
+//            'id' => "Номер",
+//            'title' => "Заголовок",
+//            'description' => "контекст",
+//            'content' => 'контент',
+//            'date' => 'Дата',
+//            'imageFile' => 'картика',
+//            'viewed' => 'просмотры',
+//            'status' => 'статус',
+//            'user_id' => 'привязка юзера',
+//            'category_id' => 'привязка категории',
+//        ];
+//    }
 
-    // public function attributeLabels()
-    // {
-    //     return [
-    //         'id' => Yii::t("app", "Номер"),
-    //         'title' => Yii::t("app", "Заголовок"),
-    //         'description' => Yii::t("app", "контекст"),
-    //         'content' => Yii::t("app", 'контент'),
-    //         'date' => Yii::t("app", 'Дата'),
-    //         'image' => Yii::t("app", 'картика'),
-    //         'viewed' => Yii::t("app", 'просмотры'),
-    //         'status' => Yii::t("app", 'статус'),
-    //         'user_id' => Yii::t("app", 'привязка юзера'),
-    //         'category_id' => Yii::t("app", 'привязка категории'),
-    //     ];
-    // }
+     public function attributeLabels()
+     {
+         return [
+             'id' => Yii::t("app", "ID"),
+             'title' => Yii::t("app", "Title"),
+             'description' => Yii::t("app", " Description"),
+             'content' => Yii::t("app", 'Content'),
+             'date' => Yii::t("app", 'Date'),
+             'image' => Yii::t("app", 'Image'),
+             'viewed' => Yii::t("app", 'Viewed'),
+             'status' => Yii::t("app", 'Status'),
+             'user_id' => Yii::t("app", 'User ID'),
+             'category_id' => Yii::t("app", 'Category ID'),
+         ];
+     }
 
     /**
      * Gets query for [[ArticleTags]].

@@ -52,18 +52,18 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'first_name' => 'First Name',
-            'last_name' => 'Last Name',
-            'patronymic' => 'Patronymic',
-            'username' => 'Username',
-            'email' => 'Email',
-            'password' => 'Password',
-            'isAdmin' => 'Is Admin',
-            'photo' => 'Photo',
-            'authKey' => 'Auth Key',
-            'createdAt' => 'Created At',
-            'updatedAt' => 'Updated At',
+            'id' =>Yii::t("app",'ID'),
+            'first_name' => Yii::t("app",'First Name'),
+            'last_name' => Yii::t("app",'Last Name'),
+            'patronymic' => Yii::t("app",'Patronymic'),
+            'username' => Yii::t("app",'Username'),
+            'email' => Yii::t("app",'Email'),
+            'password' => Yii::t("app",'Password'),
+            'isAdmin' => Yii::t("app",'Is Admin'),
+            'photo' => Yii::t("app",'Photo'),
+            'authKey' => Yii::t("app",'Auth Key'),
+            'createdAt' => Yii::t("app",'Created At'),
+            'updatedAt' => Yii::t("app",'Updated At'),
         ];
     }
 
