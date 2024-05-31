@@ -23,6 +23,14 @@ $config = [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'P-QCY_osYOEuqY9KjH4xCHZ6I3cy2w3m',
         ],
+        'authManager' => [
+            'class'           => 'yii\rbac\DbManager',
+            'itemTable'       => 'auth_item',
+            'itemChildTable'  => 'auth_item_child',
+            'assignmentTable' => 'auth_assignment',
+            'ruleTable'       => 'auth_rule',
+            'defaultRoles'    => ['guest'],// роль которая назначается всем пользователям по умолчанию
+        ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
