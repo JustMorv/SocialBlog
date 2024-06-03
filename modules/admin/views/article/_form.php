@@ -1,5 +1,6 @@
 <?php
 
+use mihaildev\ckeditor\CKEditor;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -16,7 +17,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'content')->widget(CKEditor::class, [
+        'editorOptions' => [
+            'preset' => 'full',
+            'inline' => false,
+            'allowedContent' => true,
+        ]
+    ]) ?> ?>
 
 <!--    --><?php //= $form->field($model, 'date')->textInput() ?>
 
