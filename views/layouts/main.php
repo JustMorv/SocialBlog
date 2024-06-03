@@ -63,14 +63,14 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <div class="container-fluid h-100">
     <div class="row  h-100">
         <nav class="mt-5 pt-2 offset-2 col-md-1  d-none d-md-block bg-dark   h-auto rounded-5  sidebar " >
-            <div class="sidebar-sticky">
+            <div class="sticky top-3">
                 <?= Nav::widget([
                     'options' => ['class' => 'nav  flex-column  '],
                     'items' => [
                         ['label' => 'Home', 'url' => ['/site/index'], 'linkOptions' => ['class' => 'nav-link text-white ']],
                         ['label' => 'About', 'url' => ['/site/about'], 'linkOptions' => ['class' => 'nav-link text-white']],
                         ['label' => 'Contact', 'url' => ['/site/contact'], 'linkOptions' => ['class' => 'nav-link text-white']],
-                        ['label' => 'Articles', 'url' => ['/post/index'], 'linkOptions' => ['class' => 'nav-link text-white']],
+                        ['label' => 'Articles', 'url' => ['/admin/article'], 'linkOptions' => ['class' => 'nav-link text-white']],
                         Yii::$app->user->isGuest
                             ? ['label' => 'Login', 'url' => ['/site/login'], 'linkOptions' => ['class' => 'nav-link text-white']]
                             : '<li class="nav-item">'
