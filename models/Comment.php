@@ -45,11 +45,11 @@ class Comment extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'text' => 'Text',
-            'user_id' => 'User ID',
-            'article_id' => 'Article ID',
-            'status' => 'Status',
+            'id' =>Yii::t("app", 'ID'),
+            'text' => Yii::t("app",'Text'),
+            'user_id' => Yii::t("app",'User ID'),
+            'article_id' => Yii::t("app",'Article ID'),
+            'status' => Yii::t("app",'Status'),
         ];
     }
 

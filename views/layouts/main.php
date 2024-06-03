@@ -1,6 +1,7 @@
 <?php
 
 /** @var yii\web\View $this */
+
 /** @var string $content */
 
 use app\assets\AppAsset;
@@ -32,12 +33,12 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <header id="header">
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
+        'brandLabel' => 'Social Blog ',
         'brandUrl' => Yii::$app->homeUrl,
-        'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top']
+        'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-left ']
     ]);
     echo Nav::widget([
-        'options' => ['class' => 'navbar-nav'],
+        'options' => ['class' => 'navbar-nav d-block d-md-none'],
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'About', 'url' => ['/site/about']],
@@ -47,39 +48,68 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             Yii::$app->user->isGuest
                 ? ['label' => 'Login', 'url' => ['/site/login']]
                 : '<li class="nav-item">'
-                    . Html::beginForm(['/site/logout'])
-                    . Html::submitButton(
-                        'Logout (' . Yii::$app->user->identity->username . ')',
-                        ['class' => 'nav-link btn btn-link logout']
-                    )
-                    . Html::endForm()
-                    . '</li>'
+                . Html::beginForm(['/site/logout'])
+                . Html::submitButton(
+                    'Logout (' . Yii::$app->user->identity->username . ')',
+                    ['class' => 'nav-link btn btn-link logout']
+                )
+                . Html::endForm()
+                . '</li>'
         ]
     ]);
     NavBar::end();
     ?>
 </header>
-
-<main id="main" class="flex-shrink-0" role="main">
-    <div class="container">
-        <?php if (!empty($this->params['breadcrumbs'])): ?>
-            <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
-        <?php endif ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
+<div class="container-fluid h-100">
+    <div class="row  h-100">
+        <nav class="mt-5 pt-2 offset-2 col-md-1  d-none d-md-block bg-dark   h-auto rounded-5  sidebar " >
+            <div class="sticky top-3">
+                <?= Nav::widget([
+                    'options' => ['class' => 'nav  flex-column  '],
+                    'items' => [
+                        ['label' => 'Home', 'url' => ['/site/index'], 'linkOptions' => ['class' => 'nav-link text-white ']],
+                        ['label' => 'About', 'url' => ['/site/about'], 'linkOptions' => ['class' => 'nav-link text-white']],
+                        ['label' => 'Contact', 'url' => ['/site/contact'], 'linkOptions' => ['class' => 'nav-link text-white']],
+                        ['label' => 'Articles', 'url' => ['/admin/article'], 'linkOptions' => ['class' => 'nav-link text-white']],
+                        Yii::$app->user->isGuest
+                            ? ['label' => 'Login', 'url' => ['/site/login'], 'linkOptions' => ['class' => 'nav-link text-white']]
+                            : '<li class="nav-item">'
+                            . Html::beginForm(['/site/logout'])
+                            . Html::submitButton(
+                                'Logout (' . Yii::$app->user->identity->username . ')',
+                                ['class' => 'nav-link btn btn-link logout']
+                            )
+                            . Html::endForm()
+                            . '</li>'
+                    ]
+                ]); ?>
+            </div>
+        </nav>
+        <main role="main" class="col-md-8 ml-sm-auto col-lg-8 px-4 main-content ">
+            <div class="container">
+                <?php if (!empty($this->params['breadcrumbs'])): ?>
+                    <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
+                <?php endif ?>
+                <?= Alert::widget() ?>
+                <?= $content ?>
+            </div>
+        </main>
     </div>
-</main>
+</div>
 
-<footer id="footer" class="mt-auto py-3 bg-light">
-    <div class="container">
-        <div class="row text-muted">
-            <div class="col-md-6 text-center text-md-start">&copy; My Company <?= date('Y') ?></div>
-            <div class="col-md-6 text-center text-md-end"><?= Yii::powered() ?></div>
+
+
+
+    <footer id="footer" class="position-fixed bottom-0 w-100 py-3 bg-light ">
+        <div class="container">
+            <div class="row text-muted">
+                <div class="col-md-6 text-center text-md-start">&copy; Social Blog <?= date('Y') ?></div>
+                <div class="col-md-6 text-center text-md-end"><?= Yii::powered() ?></div>
+            </div>
         </div>
-    </div>
-</footer>
+    </footer>
 
-<?php $this->endBody() ?>
+    <?php $this->endBody() ?>
 </body>
 </html>
 <?php $this->endPage() ?>
