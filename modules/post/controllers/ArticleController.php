@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace app\modules\post\controllers;
 
 use app\models\Article;
 use app\models\ArticleSeacrh;
