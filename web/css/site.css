@@ -8,7 +8,10 @@ main > .container {
     height: 60px;
 
 }
-
+.sidebar{
+    max-width: 200px;
+    width: 100%;
+}
 
 .footer > .container {
     padding-right: 15px;
@@ -19,7 +22,48 @@ main > .container {
     color: #c55;
     font-style: italic;
 }
+.avatar-container {
+    position: relative;
+    display: inline-block;
+}
 
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 51px;
+    right: -16px;
+    background-color: white;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    z-index: 1;
+}
+
+.dropdown a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+    border-bottom: 1px solid #ddd;
+}
+
+.dropdown a:last-child {
+    border-bottom: none;
+}
+
+.dropdown a:hover {
+    background-color: #f1f1f1;
+}
+
+.avatar-container.active .dropdown {
+    display: block;
+}
 /* add sorting icons to gridview sort links */
 a.asc:after, a.desc:after {
     content: '';
