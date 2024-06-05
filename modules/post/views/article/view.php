@@ -12,42 +12,39 @@ $this->params['breadcrumbs'][] = ['label' => 'Articles', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="article-view">
- <div class="article-title d-flex flex-row">
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="article-view shadow-lg pe-5 mb-5 bg-white rounded">
+    <div class="container container-title mb-4">
+        <p class=" text-sm font-medium mt-5 pt-5  mb-4 ms-5">SocialBlog<span
+                    class="mx-2">•</span><?= Html::encode($model->date) ?></p>
+        <p class="float-end mt-3">
+            <?= Html::a('<i class="fas fa-edit"></i>', ['update', 'id' => $model->id], ['class' => 'btn btn-primary', 'title' => 'Update']) ?>
+            <?= Html::a('<i class="fas fa-trash-alt"></i>', ['delete', 'id' => $model->id], [
+                'class' => 'btn btn-danger',
+                'title' => 'Delete',
+                'data' => [
+                    'confirm' => 'Are you sure you want to delete this item?',
+                    'method' => 'post',
+                ],
+            ]) ?>
+        <h1 class="ms-sm-4 me-sm-3"><?= Html::encode($this->title) ?></h1>
+        <!--        <span>--><?php //=$model->title?><!--</span>-->
+        </p>
+    </div>
 
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary mt-2']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger mt-2',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
- </div>
-    <div class="container  parent-container d-flex align-items-center justify-content-center">
-    <?=Html::img('@web/upload/' . $model->image, ['class'=>'w-50'] ) ?>
-    </div>0
-<!--    <h3>--><?php //=Html::encode($model->description, ['class'=>'w-100'] )?><!--</h3>-->
+    <div class="container container-img d-flex align-items-center justify-content-center mt-4 ">
+        <?= Html::img('@web/upload/' . $model->image, ['class' => 'w-50']) ?>
+    </div>
+    <div class="container ms-sm-4 me-sm-3 pb-5 ">
+        <div class="description w-100 my-4">
+            <p><?= Html::encode($model->description) ?></p>
+        </div>
+        <div class="article-content w-95 my-4 ms-sm-1">
+            <p><?= Html::decode($model->content) ?></p>
+        </div>
+    </div>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'title',
-            'description:ntext',
-            'content:ntext',
-            'date',
-            'viewed',
-            'status',
-            'user_id',
-            'category_id',
-        ],
-    ]) ?>
-<!--    --><?php //=\yii\helpers\VarDumper::dump(User::getUserInfo(), 10, 1)?>
-<
+
+    <!--    --><?php //=\yii\helpers\VarDumper::dump(User::getUserInfo()->email, 10, 1)?>
 
 
 </div>
