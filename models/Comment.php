@@ -21,6 +21,10 @@ class Comment extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+
+    const STATUS_OK = 0;
+    const STATUS_BLOCKED = 1;
+
     public static function tableName()
     {
         return 'comment';
@@ -45,11 +49,11 @@ class Comment extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' =>Yii::t("app", 'ID'),
-            'text' => Yii::t("app",'Text'),
-            'user_id' => Yii::t("app",'User ID'),
-            'article_id' => Yii::t("app",'Article ID'),
-            'status' => Yii::t("app",'Status'),
+            'id' => Yii::t("app", 'ID'),
+            'text' => Yii::t("app", 'Text'),
+            'user_id' => Yii::t("app", 'User ID'),
+            'article_id' => Yii::t("app", 'Article ID'),
+            'status' => Yii::t("app", 'Status'),
         ];
     }
 
@@ -72,4 +76,28 @@ class Comment extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
+
+    public function isAllowed()
+    {
+        return $this->status;
+    }
+
+    public function getDate()
+    {
+        return Yii::$app->formatter->asDate($this->date);
+    }
+
+    public function comentsBlock()
+    {
+        $this->status = self::STATUS_BLOCKED;
+        return $this->save(false);
+    }
+
+    public function comentsDisBlock()
+    {
+        $this->status = self::STATUS_OK;
+        return $this->save(false);
+    }
+
+
 }

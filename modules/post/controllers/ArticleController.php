@@ -5,6 +5,7 @@ namespace app\modules\post\controllers;
 use app\models\Article;
 use app\models\ArticleSeacrh;
 use app\models\ImageUpload;
+use yii\data\Pagination;
 use yii\helpers\VarDumper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -42,12 +43,17 @@ class ArticleController extends Controller
      */
     public function actionIndex()
     {
+        $query = Article::find();
+
+        $count = $query->count();
+        $pagination = new Pagination(['totalCount' => $count, 'pageSize' => 5]);
+        $articles = $query->offset($pagination->offset)->limit($pagination->limit)->all();
         $searchModel = new ArticleSeacrh();
-        $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'articles' => $articles,
+            'pagination' => $pagination,
         ]);
     }
 

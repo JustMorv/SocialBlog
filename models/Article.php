@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\data\Pagination;
 
 /**
  * This is the model class for table "article".
@@ -110,12 +111,22 @@ class Article extends \yii\db\ActiveRecord
         return $this->hasOne(Category::class, ['id' => 'category_id']);
     }
 
-
-    public function saveImage($image)
+    public function getArticleComments()
     {
-        $this->image = $image;
+        return $this->getComments()->where(['status' => 1])->all();
+    }
+
+    public function getAuthorComment()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    public function viewedCounter()
+    {
+        $this->viewed += 1;
         return $this->save(false);
     }
+
 
     public function upload()
     {
