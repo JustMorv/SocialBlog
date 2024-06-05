@@ -72,9 +72,18 @@ class ChatController extends Controller
     {
         $chat_id = $playload['data']['chat_id'];
         $chat = Chat::findOne($chat_id);
-        if(isNull($chat)){
-            return ["error"=> "chat is null"];
+        if (is_null($chat)) {
+            return ["error" => "chat is null"];
         }
+
+        $message = $this->createMessage($chat_id, $playload['data']['username'], $playload['data']['text']);
+
+        $this->notifyAll($message, [$connection->id]);
+
+
+        return [
+            'message' => $message->toArray()
+        ];
 
     }
 
@@ -86,16 +95,48 @@ class ChatController extends Controller
         $chat->save();
 
 
-        $message = new Message();
-        $message->chat_id = $chat->id;
-        $message->username = $playload['data']['username'];
-        $message->text = $playload['data']['text'];
-        $message->create_time = time();
-        $message->save();
+        $message = $this->createMessage($chat->id, $playload['data']['username'], $playload['data']['text']);
+
+        $this->notifyAll($message, [$connection->id]);
 
 
-        return ['message' => $message->toArray()];
+        return [
+            'chat' => $chat->toArray(),
+            'message' => $message->toArray()
+        ];
 
 
     }
+
+    public function createMessage($chat_id, $username, $text): Message
+    {
+        $message = new Message();
+        $message->chat_id = $chat_id;
+        $message->username = $username;
+        $message->text = $text;
+        $message->create_time = time();
+        $message->save();
+
+        return $message;
+    }
+
+    public function notifyAll(Message $message, $except = [])
+    {
+        $response = json_encode([
+            'method' => 'newMessage',
+            'data' => [
+                'message' => $message->toArray(),
+            ]
+        ]);
+
+
+        foreach ($this->connections as $conn) {
+            if (in_array($conn->id, $except)) {
+                continue;
+            }
+            $conn->send($response);
+        }
+
+    }
+
 }
