@@ -23,7 +23,7 @@ use Yii;
  */
 class Article extends \yii\db\ActiveRecord
 {
-    public $imageFile;
+    public $imageFiles;
 
     /**
      * {@inheritdoc}
@@ -48,7 +48,7 @@ class Article extends \yii\db\ActiveRecord
             [['date'], 'default', 'value' => date('Y-m-d')],
             [['viewed', 'status', 'user_id', 'category_id'], 'integer'],
             [['title',], 'string', 'max' => 255],
-            [['imageFile'], 'file', 'extensions' => 'jpg,png']
+            [['imageFiles'], 'file', 'extensions' => 'jpg, png', 'maxFiles' => 10],
         ];
     }
 
@@ -117,13 +117,36 @@ class Article extends \yii\db\ActiveRecord
         return $this->save(false);
     }
 
-    public function upload($image)
+    public function upload()
     {
-        $this->image = $image;
-        $path = Yii::getAlias("@web") . 'upload/';
-        $this->image = strtolower(md5(uniqid($image->baseName))) . '.' . $image->extension;
+        if ($this->validate()) {
+            $files = $this->imageFiles;
+            if (!empty($files)) {
+                // Обработка первого файла
+                $firstFile = array_shift($files);
+                $path = Yii::getAlias("@webroot") . '/upload/';
+                $filename = strtolower(md5(uniqid($firstFile->baseName))) . '.' . $firstFile->extension;
+                if ($firstFile->saveAs($path . $filename)) {
+                    $this->image = $filename; // Сохранение первого файла в поле image
+                    $this->save(false);
+                }
 
-        $image->saveAs($path . $this->image);
-        $this->save(false);
+                // Обработка остальных файлов
+                foreach ($files as $file) {
+                    $filename = strtolower(md5(uniqid($file->baseName))) . '.' . $file->extension;
+                    if ($file->saveAs($path . $filename)) {
+                        // Сохранение информации о каждом файле в базе данных
+                        $articleImage = new ArticleImage();
+                        $articleImage->article_id = $this->id;
+                        $articleImage->filename = $filename;
+                        $articleImage->save(false);
+                    }
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
+
 }

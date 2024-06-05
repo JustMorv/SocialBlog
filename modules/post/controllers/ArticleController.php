@@ -5,6 +5,7 @@ namespace app\modules\post\controllers;
 use app\models\Article;
 use app\models\ArticleSeacrh;
 use app\models\ImageUpload;
+use yii\helpers\VarDumper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -73,16 +74,13 @@ class ArticleController extends Controller
     {
         $model = new Article();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-                $model->upload($model->imageFile);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
+
+            if ($model->save() && $model->upload()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
-        } else {
-            $model->loadDefaultValues();
         }
-
         return $this->render('create', [
             'model' => $model,
         ]);
@@ -95,35 +93,39 @@ class ArticleController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public
+    function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
+        if ($model->load(Yii::$app->request->post())) {
+            $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
 
+            if ($model->save() && $model->upload()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+        }
+        return $this->render('update', [
+            'model' => $model,
+        ]);
+    }
 
+    public
+    function actionImage($id)
+    {
+        $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
 
-            $model->upload($model->imageFile);
-            return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->upload()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', [
             'model' => $model,
         ]);
-    }
-    public function actionImage($id){
-        $model = new ImageUpload();
-        if (Yii::$app->request->post()){
-            $acticle = $this->findModel($id);
-            $model->image = UploadedFile::getInstance($model, 'image');
-
-            $acticle->saveImage($model->upload($model->image));
-
-        }
-
-        return $this->render('image', ["model" => $model]);
     }
 
     /**
@@ -133,7 +135,8 @@ class ArticleController extends Controller
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public
+    function actionDelete($id)
     {
         $this->findModel($id)->delete();
 
@@ -147,7 +150,8 @@ class ArticleController extends Controller
      * @return Article the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected
+    function findModel($id)
     {
         if (($model = Article::findOne(['id' => $id])) !== null) {
             return $model;

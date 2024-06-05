@@ -27,7 +27,7 @@ use yii\widgets\ActiveForm;
 
 <!--    --><?php //= $form->field($model, 'date')->textInput() ?>
 
-    <?= $form->field($model, 'imageFile')->fileInput() ?>
+    <?= $form->field($model, 'imageFiles[]')->fileInput(['multiple' => true]) ?>
 
 <!--    --><?php //= $form->field($model, 'viewed')->textInput() ?>
 
