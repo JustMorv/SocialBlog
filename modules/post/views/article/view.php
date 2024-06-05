@@ -1,6 +1,7 @@
 <?php
 
 use app\models\User;
+use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
 use yii\widgets\DetailView;
 
@@ -43,8 +44,16 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
+    <?php $form = ActiveForm::begin([
+        'action' => ['article/comment', 'id' => $model->id]
+    ]) ?>
+    <?= $form->field($commentForm, 'comment')->textarea(['class' => 'form-control', ]) ?>
 
-    <!--    --><?php //=\yii\helpers\VarDumper::dump(User::getUserInfo()->email, 10, 1)?>
+    <div class="form-group">
+        <?= Html::submitButton(Yii::t('app', 'Добавить'),['class'=>'btn btn-success ']) ?>
+    </div>
+
+    <?php ActiveForm::end(); ?>
 
 
 </div>

@@ -4,6 +4,8 @@ namespace app\modules\post\controllers;
 
 use app\models\Article;
 use app\models\ArticleSeacrh;
+use app\models\Comment;
+use app\models\forms\CommentForm;
 use app\models\ImageUpload;
 use yii\data\Pagination;
 use yii\helpers\VarDumper;
@@ -48,10 +50,12 @@ class ArticleController extends Controller
         $count = $query->count();
         $pagination = new Pagination(['totalCount' => $count, 'pageSize' => 5]);
         $articles = $query->offset($pagination->offset)->limit($pagination->limit)->all();
+        $commentForm = new CommentForm();
         $searchModel = new ArticleSeacrh();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'articles' => $articles,
+            'commentForm' => $commentForm,
             'pagination' => $pagination,]);
     }
 
@@ -64,9 +68,26 @@ class ArticleController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
+        $commentForm = new CommentForm();
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'commentForm' => $commentForm,
+
         ]);
+    }
+
+
+    public function actionComment($id)
+    {
+        $model = new CommentForm();
+
+        if (Yii::$app->request->post()) {
+            $model->load(Yii::$app->request->post());
+            if($model->saveComment($id)){
+                return $this->redirect(['article/view', 'id'=>$id]);
+            }
+        }
     }
 
     /**
