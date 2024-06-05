@@ -23,7 +23,7 @@ use yii\widgets\ActiveForm;
             'inline' => false,
             'allowedContent' => true,
         ]
-    ]) ?> ?>
+    ]) ?>
 
 <!--    --><?php //= $form->field($model, 'date')->textInput() ?>
 

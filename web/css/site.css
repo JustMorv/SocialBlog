@@ -44,7 +44,23 @@ main > .container {
     border-radius: 5px;
     z-index: 1;
 }
+.article-view{
 
+}
+
+.description{
+
+    font-size: 30px;
+    margin-top: 20px;
+}
+.container-title {
+    padding: 0 0;
+}
+
+
+.article-content{
+    font-size: 22px;
+}
 .dropdown a {
     display: block;
     padding: 10px;

@@ -27,6 +27,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <html lang="<?= Yii::$app->language ?>" class="h-100">
 <head>
     <title><?= Html::encode($this->title) ?></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <?php $this->head() ?>
 </head>
 <body class="d-flex flex-column h-100">
@@ -60,8 +62,10 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             <?php } ?>
         </div>
     </div>
+</header>
 
-    <nav class="main-menu">
+<div class="container-fluid h-100 ">
+    <nav class="main-menu ">
         <ul>
             <li>
                 <a href="<?= Url::to(['/site/index']) ?>">
@@ -136,16 +140,16 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         </ul>
 
     </nav>
-</header>
-<div class="container-fluid h-100">
-    <div class="container">
+
+
+    <div class="container pb-5" >
         <?php if (!empty($this->params['breadcrumbs'])): ?>
             <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
         <?php endif ?>
         <?= Alert::widget() ?>
         <?= $content ?>
     </div>
-    </main>
+
 </div>
 </div>
 
