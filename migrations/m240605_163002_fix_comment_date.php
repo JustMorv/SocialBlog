@@ -12,7 +12,7 @@ class m240605_163002_fix_comment_date extends Migration
      */
     public function safeUp()
     {
-        $this->alterColumn('comment', 'date', $this->date());
+        $this->addColumn('comment', 'date', $this->date());
     }
 
     /**
