@@ -15,7 +15,9 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="article-view shadow-lg pe-5 mb-5 bg-white rounded">
     <div class="container container-title mb-4">
-        <p class=" text-sm font-medium mt-5 pt-5  mb-4 ms-5">SocialBlog<span
+        <p class="text-decoration-none  text-sm font-medium mt-5 pt-5  mb-4 ms-5 ">  <?php foreach ($categories as $category) { ?>
+                <?= Html::a($category->title,['/post/article']) ?>
+            <?php } ?><span
                     class="mx-2">•</span><?= Html::encode($model->date) ?></p>
         <p class="float-end mt-3">
             <?= Html::a('<i class="fas fa-edit"></i>', ['update', 'id' => $model->id], ['class' => 'btn btn-primary', 'title' => 'Update']) ?>
@@ -28,32 +30,54 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ]) ?>
         <h1 class="ms-sm-4 me-sm-3"><?= Html::encode($this->title) ?></h1>
-        <!--        <span>--><?php //=$model->title?><!--</span>-->
+
         </p>
     </div>
 
     <div class="container container-img d-flex align-items-center justify-content-center mt-4 ">
-        <?= Html::img('@web/upload/' . $model->image, ['class' => 'w-50']) ?>
+        <?php if (!$articleImage) { ?>
+            <div class="container container-img d-flex align-items-center justify-content-center mt-4 ">        <?= Html::img('@web/upload/' . $model->image, ['class' => 'w-50']) ?>
+            </div><?php } else { ?>
+            <?= \app\widgets\CarouselArticle\CarouselArticle::widget(['data' => $data,]) ?>
+        <?php } ?>
     </div>
-    <div class="container ms-sm-4 me-sm-3 pb-5 ">
-        <div class="description w-100 my-4">
+    <div class="container-content ms-sm-4 me-sm-3 pb-5">
+        <div class="description w-100 my-4 align-con">
             <p><?= Html::encode($model->description) ?></p>
         </div>
         <div class="article-content w-95 my-4 ms-sm-1">
             <p><?= Html::decode($model->content) ?></p>
         </div>
+
+        <div class="comments">
+            <h2>Комментарии</h2>
+            <?php if (!empty($comments)): ?>
+                <?php foreach ($comments as $comment): ?>
+                    <div class="comment">
+                        <p><strong><?= Html::encode($comment->user->first_name) ?></strong>
+                            <strong><?= Html::encode($comment->user->last_name) ?>:</strong></p>
+                        <p><?= Html::encode($comment->text) ?></p>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>Комментариев пока нет.</p>
+            <?php endif; ?>
+        </div>
+
+        <div class="comment-form">
+            <h2>Оставить комментарий</h2>
+            <?php $form = ActiveForm::begin([
+                'action' => ['article/comment', 'id' => $model->id]
+            ]) ?>
+            <?= $form->field($commentForm, 'comment')->textarea(['class' => 'form-control',]) ?>
+
+            <div class="form-group">
+                <?= Html::submitButton(Yii::t('app', 'Добавить'), ['class' => 'btn btn-success ']) ?>
+            </div>
+
+            <?php ActiveForm::end(); ?>
+
+        </div>
+
+
     </div>
-
-    <?php $form = ActiveForm::begin([
-        'action' => ['article/comment', 'id' => $model->id]
-    ]) ?>
-    <?= $form->field($commentForm, 'comment')->textarea(['class' => 'form-control', ]) ?>
-
-    <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Добавить'),['class'=>'btn btn-success ']) ?>
-    </div>
-
-    <?php ActiveForm::end(); ?>
-
-
-</div>

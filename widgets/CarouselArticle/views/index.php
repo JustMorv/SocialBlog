@@ -22,9 +22,9 @@ use yii\bootstrap5\Html;
                 <?php }?>
         <?= Html::endTag('div') ?>
         <!-- pagination -->
-        <?=Html::beginTag('div',['class'=>'container'])?>
+        <?=Html::beginTag('div',['class'=>'container '])?>
             <?=Html::beginTag('div',['class'=>'slider__navigation '])?>
-                <?=Html::tag('div','slider',['class'=>'swiper-pagination d-flex'])?>
+                <?=Html::tag('div','slider',['class'=>'swiper-pagination d-flex '])?>
             <?= Html::endTag('div') ?>
         <?= Html::endTag('div') ?>
         <!-- pagination -->

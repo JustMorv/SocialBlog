@@ -64,8 +64,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     </div>
 </header>
 
-<div class="container-fluid h-100 ">
-    <nav class="main-menu ">
+<div class="container-fluid  ">
+    <nav class="main-menu h-100 position-fixed ">
         <ul>
             <li>
                 <a href="<?= Url::to(['/site/index']) ?>">
@@ -75,7 +75,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 
             </li>
             <li class="has-subnav">
-                <a href="<?= Url::to(['/admin/index']) ?>">
+                <a href="<?= Url::to(['/post/article']) ?>">
                     <i class="fa fa-globe fa-2x"></i>
                     <span class="nav-text"><?= Yii::t('app', 'Статьи') ?></span>
                 </a>
@@ -151,7 +151,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     </div>
 
 </div>
-</div>
+
 
 
 <footer id="footer" class="position-fixed bottom-0 w-100 py-3 bg-light ">

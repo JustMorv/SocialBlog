@@ -2,8 +2,12 @@
 
 namespace app\controllers;
 
+use app\models\Article;
+use app\models\ArticleSeacrh;
+use app\models\forms\CommentForm;
 use app\models\forms\RegisterForm;
 use Yii;
+use yii\data\Pagination;
 use yii\filters\AccessControl;
 use yii\web\Response;
 use yii\filters\VerbFilter;
@@ -65,16 +69,21 @@ class SiteController extends Controller
     public function actionIndex()
     {
 
-
-        return $this->render('index',[
-
-
-        ]);
+        $query = Article::find();
+        $count = $query->count();
+        $pagination = new Pagination(['totalCount' => $count, 'pageSize' => 5]);
+        $articles = $query->offset($pagination->offset)->limit($pagination->limit)->all();
+        $commentForm = new CommentForm();
+        $searchModel = new ArticleSeacrh();
+        return $this->render('@app/modules/post/views/article/index', [
+            'searchModel' => $searchModel, 'articles' => $articles,
+            'commentForm' => $commentForm, 'pagination' => $pagination,]);
     }
 
-    public function actionSay($message = "hello"){
+    public function actionSay($message = "hello")
+    {
         return $this->render('say', [
-            'message'=>$message,
+            'message' => $message,
         ]);
 
     }
@@ -101,6 +110,7 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
+
     public function actionRegister()
     {
         if (!Yii::$app->user->isGuest) {
@@ -109,9 +119,9 @@ class SiteController extends Controller
 
         $model = new RegisterForm();
         if ($model->load(Yii::$app->request->post())) {
-            if($user = $model->register()){
+            if ($user = $model->register()) {
 
-                if(Yii::$app->getUser()->login($user)){
+                if (Yii::$app->getUser()->login($user)) {
                     return $this->goHome();
                 }
             }
@@ -149,8 +159,7 @@ class SiteController extends Controller
     public function actionEntry()
     {
         $model = new EntryForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate())
-        {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             // данные в $model удачно проверены
             // делаем что-то полезное с $model ...
             return $this->render('entry-confirm', ['model' => $model]);

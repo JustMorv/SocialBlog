@@ -3,7 +3,10 @@
 namespace app\modules\post\controllers;
 
 use app\models\Article;
+use app\models\ArticleImage;
 use app\models\ArticleSeacrh;
+use app\models\Category;
+use app\models\CategorySeacrh;
 use app\models\Comment;
 use app\models\forms\CommentForm;
 use app\models\ImageUpload;
@@ -67,25 +70,44 @@ class ArticleController extends Controller
      */
     public function actionView($id)
     {
+
         $model = $this->findModel($id);
         $commentForm = new CommentForm();
+        $comments = Comment::find()
+            ->where(['status' => 0])
+            ->where(['article_id' => $id])
+            ->orderBy(['date' => SORT_DESC])
+            ->limit(10)
+            ->with('user')
+            ->all();
+        $categories = Category::find()->where(['id' => $model->category_id])->all();
 
-        return $this->render('view', [
-            'model' => $this->findModel($id),
+
+        $images = [];
+        $articleImage = ArticleImage::find()->where(['article_id' => $model->id])->all();
+        foreach ($articleImage as $articleImg) {
+            $images[] = $articleImg->filename;
+        }
+        $data = array_merge(array($model->image), $images);
+
+
+        return $this->render('view', ['model' => $model,
             'commentForm' => $commentForm,
-
-        ]);
+            'comments' => $comments,
+            'categories' => $categories,
+            'data' => $data,
+            'articleImage' => $articleImage,]);
     }
 
-
-    public function actionComment($id)
+    public
+    function actionComment($id)
     {
         $model = new CommentForm();
 
         if (Yii::$app->request->post()) {
             $model->load(Yii::$app->request->post());
-            if($model->saveComment($id)){
-                return $this->redirect(['article/view', 'id'=>$id]);
+            if ($model->saveComment($id)) {
+                return $this->redirect(['article/view', 'id' => $id]);
             }
         }
     }
@@ -95,7 +117,8 @@ class ArticleController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate()
+    public
+    function actionCreate()
     {
         $model = new Article();
 
