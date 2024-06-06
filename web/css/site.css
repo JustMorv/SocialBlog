@@ -28,6 +28,10 @@ main > .container {
     position: relative;
     display: inline-block;
 }
+.container-content{
+    text-align: justify;
+}
+
 
 .avatar {
     width: 40px;
@@ -178,20 +182,14 @@ img {
     }
 
 }
-.card-link {
-    text-decoration: none;
-    color: inherit;
-}
 
-.card-link .card {
-    display: block;
 
-}
 
 
 .card-image {
     border-radius: 10px;
     overflow: hidden;
+    justify-content: center;
     height: 184px;
 }
 
