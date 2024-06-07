@@ -151,3 +151,34 @@ nav ul,nav li {
     height: 100%;
 }
 
+.profile-container {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    padding: 20px;
+    height: 600px;
+    text-align: center;
+}
+.profile-photo {
+    width: 400px;
+    height: 400px;
+    object-fit: cover;
+    margin-bottom: 20px;
+}
+.profile-info {
+    text-align: left;
+}
+.profile-info h2 {
+    margin: 0;
+    font-size: 24px;
+}
+.profile-info p {
+    margin: 5px 0;
+}
+.profile-info .label {
+    font-weight: bold;
+}
+.profile-info .value {
+    margin-left: 10px;
+}
