@@ -22,8 +22,8 @@ class RegisterForm extends Model
 
     public $password;
     public $patronymic;
-    public $photo;
 
+    public $imageFile;
 
     /**
      * @return array the validation rules.
@@ -36,9 +36,24 @@ class RegisterForm extends Model
             ['password', 'string', 'min' => 6],
             ['email', 'email'],
             ['patronymic', 'string'],
-            ['photo', 'string'],
+            [['imageFile'], 'file', 'extensions' => 'jpg,png'],
+
         ];
     }
+
+    public function attributeLabels()
+    {
+        return [
+            'first_name' => Yii::t("app",'Имя'),
+            'last_name' => Yii::t("app",'Фамилия'),
+            'patronymic' => Yii::t("app",'Отчество'),
+            'username' => Yii::t("app",'Логин'),
+            'email' => Yii::t("app",'E-mail'),
+            'password' => Yii::t("app",'Пароль'),
+            'photo' => Yii::t("app",'Фото'),
+        ];
+    }
+
 
     public function register()
     {
@@ -51,10 +66,20 @@ class RegisterForm extends Model
         $user->last_name = $this->last_name;
         $user->email = $this->email;
         $user->patronymic = $this->patronymic;
-        $user->photo = $this->photo;
+        $user->photo = $this->imageFile;
         $user->hashPassword($this->password);
 
         return $user->save() ? $user : null;
+
+    }
+
+    public function uploadImage($image)
+    {
+        $this->imageFile = $image;
+        $path = Yii::getAlias("@webroot") . '/upload/';
+        $this->imageFile =  strtolower(md5(uniqid($image->baseName))) . '.' . $image->extension;
+
+        $image->saveAs($path . $this->imageFile);
 
     }
 

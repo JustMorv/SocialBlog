@@ -14,6 +14,7 @@ use yii\filters\VerbFilter;
 use app\models\forms\LoginForm;
 use yii\web\Controller;
 use Symfony\Component\VarDumper\VarDumper;
+use yii\web\UploadedFile;
 
 
 class SiteController extends Controller
@@ -119,6 +120,9 @@ class SiteController extends Controller
 
         $model = new RegisterForm();
         if ($model->load(Yii::$app->request->post())) {
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+
+            $model->uploadImage($model->imageFile);
             if ($user = $model->register()) {
 
                 if (Yii::$app->getUser()->login($user)) {
