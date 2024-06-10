@@ -9,7 +9,7 @@ use yii\bootstrap5\Html;
 
 
 <?=Html::beginTag('div',['class'=>'container-fluid customcolor text-center g-0'])?>
-    <?=Html::beginTag('div',['class'=>'swiper-container swiper-container-slider bg-dark '])?>
+    <?=Html::beginTag('div',['class'=>'swiper-container swiper-container-slider  '])?>
         <?=Html::beginTag('div',['class'=>'swiper-wrapper  '])?>
             <?php foreach ($data as $key => $slide){?>
                     <?=Html::beginTag('div',['class'=>'swiper-slide'])?>

@@ -4,6 +4,8 @@ use app\models\User;
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
 use yii\widgets\DetailView;
+use app\models\Category;
+
 
 /** @var yii\web\View $this */
 /** @var app\models\Article $model */
@@ -16,9 +18,9 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="article-view shadow-lg pe-5 mb-5 bg-white rounded">
     <div class="container container-title mb-4">
         <p class="text-decoration-none  text-sm font-medium mt-5 pt-5  mb-4 ms-5 ">  <?php foreach ($categories as $category) { ?>
-                <?= Html::a($category->title,['/post/article']) ?>
-            <?php } ?><span
-                    class="mx-2">•</span><?= Html::encode($model->date) ?></p>
+                <?= Html::a($category->title, ['/post/article']) ?>
+            <?php } ?><span class="mx-2">•</span><?= Html::encode($model->date) ?></p>
+        <?php if (Yii::$app->user->id == $model->user_id){ ?>
         <p class="float-end mt-3">
             <?= Html::a('<i class="fas fa-edit"></i>', ['update', 'id' => $model->id], ['class' => 'btn btn-primary', 'title' => 'Update']) ?>
             <?= Html::a('<i class="fas fa-trash-alt"></i>', ['delete', 'id' => $model->id], [
@@ -29,12 +31,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     'method' => 'post',
                 ],
             ]) ?>
+            <?php } ?>
         <h1 class="ms-sm-4 me-sm-3"><?= Html::encode($this->title) ?></h1>
 
         </p>
     </div>
 
-    <div class="container container-img d-flex align-items-center justify-content-center mt-4 ">
+    <div class="container container-img d-flex align-items-center justify-content-center mt-5 ">
         <?php if (!$articleImage) { ?>
             <div class="container container-img d-flex align-items-center justify-content-center mt-4 ">        <?= Html::img('@web/upload/' . $model->image, ['class' => 'w-50']) ?>
             </div><?php } else { ?>
@@ -54,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php if (!empty($comments)): ?>
                 <?php foreach ($comments as $comment): ?>
                     <div class="comment">
-                        <p><strong><?= Html::encode($comment->user->first_name) ?></strong>
+                        <p class="font-size-large"><strong><?= Html::encode($comment->user->first_name) ?></strong>
                             <strong><?= Html::encode($comment->user->last_name) ?>:</strong></p>
                         <p><?= Html::encode($comment->text) ?></p>
                     </div>
@@ -64,6 +67,9 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php endif; ?>
         </div>
 
+        <?php if (Yii::$app->user->identity == null){ ?>
+            <p><?= Html::a("Войти", ['/site/login']) ?>, чтоб оставить коментарий </p>
+        <?php }else{ ?>
         <div class="comment-form">
             <h2>Оставить комментарий</h2>
             <?php $form = ActiveForm::begin([
@@ -76,6 +82,16 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
 
             <?php ActiveForm::end(); ?>
+            <?php } ?>
+
+
+
+            <nav class="nav flex-column ">
+                    <?php foreach ($category_all as $category): ?>
+                        <?= Html::a($category->title,['/post/article']) ?>
+                    <?php endforeach; ?>
+            </nav>
+
 
         </div>
 

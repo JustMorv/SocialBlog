@@ -19,10 +19,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="article-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+    <?php if (Yii::$app->user->identity!=null){ ?>
     <p>
-        <?= Html::a('Create Article', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Article', ['/post/article/create'], ['class' => 'btn btn-success']) ?>
     </p>
+    <?php } ?>
 
     <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
