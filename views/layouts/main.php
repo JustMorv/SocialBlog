@@ -35,8 +35,6 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 </head>
 
 
-
-
 <body class="d-flex flex-column h-100">
 <?php $this->beginBody() ?>
 
@@ -89,75 +87,33 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             <li class="has-subnav">
                 <a href="#">
                     <i class="fa fa-comments fa-2x"></i>
-                    <span class="nav-text">
-                            Group Hub Forums
-                        </span>
+                    <span class="nav-text"><?= Yii::t('app', 'Сообщения') ?></span>
                 </a>
             </li>
-<!--            <li class="has-subnav">-->
-<!--                <a href="#">-->
-<!--                    <i class="fa fa-camera-retro fa-2x"></i>-->
-<!--                    <span class="nav-text">-->
-<!--                            Survey Photos-->
-<!--                        </span>-->
-<!--                </a>-->
-<!---->
-<!--            </li>-->
-<!--            <li>-->
-<!--                <a href="#">-->
-<!--                    <i class="fa fa-film fa-2x"></i>-->
-<!--                    <span class="nav-text">-->
-<!--                            Surveying Tutorials-->
-<!--                        </span>-->
-<!--                </a>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                <a href="#">-->
-<!--                    <i class="fa fa-book fa-2x"></i>-->
-<!--                    <span class="nav-text">-->
-<!--                           Surveying Jobs-->
-<!--                        </span>-->
-<!--                </a>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                <a href="#">-->
-<!--                    <i class="fa fa-cogs fa-2x"></i>-->
-<!--                    <span class="nav-text">-->
-<!--                            Tools & Resources-->
-<!--                        </span>-->
-<!--                </a>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                <a href="#">-->
-<!--                    <i class="fa fa-map-marker fa-2x"></i>-->
-<!--                    <span class="nav-text">-->
-<!--                            Member Map-->
-<!--                        </span>-->
-<!--                </a>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                <a href="#">-->
-<!--                    <i class="fa fa-info fa-2x"></i>-->
-<!--                    <span class="nav-text">-->
-<!--                            Documentation-->
-<!--                        </span>-->
-<!--                </a>-->
-<!--            </li>-->
+            <?php if (Yii::$app->user->identity) { ?>
+                <li class="has-subnav">
+                    <a href="<?= Url::to(['/user/profile']) ?>">
+                        <i class="fa fa-user fa-2x"></i>
+                        <span class="nav-text"><?= Yii::t('app', 'моя страница') ?></span>
+                    </a>
+                </li>
+            <?php } ?>
         </ul>
 
     </nav>
 
 
-    <div class="container pb-5" >
+    <div class="container pb-5 bg-light" >
         <?php if (!empty($this->params['breadcrumbs'])): ?>
-            <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
+            <div class=""style="margin-left: 40px">
+                <?= Html::tag('i', '', ['class' => 'nav-icon fa fa-home fa-2x fa-breadcrumbs ']) . Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
+            </div>
         <?php endif ?>
         <?= Alert::widget() ?>
-        <?= $content ?>
+        <div class="container"><?= $content ?></div>
     </div>
 
 </div>
-
 
 
 <footer id="footer" class="position-fixed bottom-0 w-100 py-3 bg-light ">

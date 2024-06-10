@@ -38,7 +38,7 @@ class Comment extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'article_id', 'status'], 'integer'],
-            [['text'], 'string', 'max' => 255],
+            [['text'], 'string'],
             [['article_id'], 'exist', 'skipOnError' => true, 'targetClass' => Article::class, 'targetAttribute' => ['article_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];

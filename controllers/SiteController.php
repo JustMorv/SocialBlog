@@ -69,17 +69,18 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-//
-//        $query = Article::find();
-//        $count = $query->count();
-//        $pagination = new Pagination(['totalCount' => $count, 'pageSize' => 5]);
-//        $articles = $query->offset($pagination->offset)->limit($pagination->limit)->all();
-//        $commentForm = new CommentForm();
-//        $searchModel = new ArticleSeacrh();
-//        return $this->render('@app/modules/post/views/article/index', [
-//            'searchModel' => $searchModel, 'articles' => $articles,
-//            'commentForm' => $commentForm, 'pagination' => $pagination,]);
-        return $this->render('index');
+        $query = Article::find();
+
+        $count = $query->count();
+        $pagination = new Pagination(['totalCount' => $count, 'pageSize' => 5]);
+        $articles = $query->offset($pagination->offset)->limit($pagination->limit)->all();
+        $commentForm = new CommentForm();
+        $searchModel = new ArticleSeacrh();
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'articles' => $articles,
+            'commentForm' => $commentForm,
+            'pagination' => $pagination,]);
     }
 
     public function actionSay($message = "hello")
