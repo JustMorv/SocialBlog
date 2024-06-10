@@ -3,6 +3,7 @@
 use app\models\User;
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
+use yii\helpers\Url;
 use yii\widgets\DetailView;
 use app\models\Category;
 
@@ -70,11 +71,17 @@ $this->params['breadcrumbs'][] = $this->title;
                         <p class="ml-2 d-flex justify-content-end">
                             <?= Yii::$app->formatter->asDate(strtotime(Html::encode($comment->date)), 'php:d F Y');?>
                         </p>
-                        <?php if (Yii::$app->user->id === $model->user_id) { ?>
+                        <?php if (Yii::$app->user->id === $model->user_id): ?>
                             <div class="btn-container d-flex justify-content-end">
-                                <?= Html::a(Html::tag('i', '', ['class' => 'fas fa-trash-alt']), '', ['class' => 'btn btn-danger ']) ?>
+                                <?php if ($comment->status == $comment::STATUS_OK): ?>
+                                    <?= Html::a(
+                                        Html::tag('i', '', ['class' => 'fas fa-trash-alt']),
+                                        Url::to(['comment/block', 'id' => $comment->id]),
+                                        ['class' => 'btn btn-danger', 'title' => 'Заблокировать']
+                                    ) ?>
+                                <?php endif; ?>
                             </div>
-                        <?php } ?>
+                        <?php endif; ?>
                     </div>
 
                 <?php endforeach; ?>
