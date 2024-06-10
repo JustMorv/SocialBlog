@@ -51,10 +51,11 @@ class ArticleController extends Controller
         $query = Article::find();
 
         $count = $query->count();
-        $pagination = new Pagination(['totalCount' => $count, 'pageSize' => 5]);
+        $pagination = new Pagination(['totalCount' => $count, 'pageSize' => 6]);
         $articles = $query->offset($pagination->offset)->limit($pagination->limit)->all();
         $commentForm = new CommentForm();
         $searchModel = new ArticleSeacrh();
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'articles' => $articles,
@@ -80,8 +81,9 @@ class ArticleController extends Controller
             ->limit(10)
             ->with('user')
             ->all();
-        $categories = Category::find()->where(['id' => $model->category_id])->all();
 
+
+        $categories = Category::find()->where(['id' => $model->category_id])->all();
 
         $images = [];
         $articleImage = ArticleImage::find()->where(['article_id' => $model->id])->all();
@@ -89,14 +91,16 @@ class ArticleController extends Controller
             $images[] = $articleImg->filename;
         }
         $data = array_merge(array($model->image), $images);
-
+        $category_all = Category::find()->all();
 
         return $this->render('view', ['model' => $model,
             'commentForm' => $commentForm,
             'comments' => $comments,
             'categories' => $categories,
             'data' => $data,
-            'articleImage' => $articleImage,]);
+            'articleImage' => $articleImage,
+            'category_all'=>$category_all,
+            ]);
     }
 
     public
