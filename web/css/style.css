@@ -140,6 +140,109 @@ nav ul,nav li {
     margin:0;
     padding:0;
 }
+.fa-breadcrumbs{
+    position: relative;
+    left: -48px;
+    top: 29px;
+    /* display: table-cell; */
+    /* width: 60px; */
+    /* height: 36px; */
+    text-align: center;
+    vertical-align: middle;
+    font-size: 25px;
+    color: grey;
+}
+.profile-card-list{
+    display: block;
+}
+
+.comments {
+    margin-top: 40px;
+}
+.comments h2 {
+    margin-bottom: 20px;
+}
+.comment {
+    background: #fff;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+.comment img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+.comment p {
+    margin: 0;
+}
+.comment strong {
+    display: block;
+}
+.comment-form {
+    margin-top: 40px;
+}
+.comment-form h2 {
+    margin-bottom: 20px;
+}
+.comment-form .form-group {
+    margin-top: 20px;
+}
+.comment-form .form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.comment-first-name{
+    margin-right: 10px;
+}
+.fa-eye{
+    width: 34px;
+    height: 22px;
+}
+
+.post {
+    background: #fff;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+}
+.post a {
+    text-decoration: none;
+    color: inherit;
+}
+.post img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+.post h2 {
+    margin-top: 10px;
+    font-size: 1.5em;
+}
+.post .date {
+    color: #888;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+.post p {
+    margin: 10px 0;
+}
+.card-meta {
+    font-size: 0.9em;
+    color: #666;
+    display: flex;
+    align-items: center;
+}
+.card-meta--views {
+    margin-top: 10px;
+}
 .main-menu li:hover>a,nav.main-menu li.active>a,.dropdown-menu>li>a:hover,.dropdown-menu>li>a:focus,.dropdown-menu>.active>a,.dropdown-menu>.active>a:hover,.dropdown-menu>.active>a:focus,.no-touch .dashboard-page nav.dashboard-menu ul li:hover a,.dashboard-page nav.dashboard-menu ul li.active a {
     color:#fff;
     background-color:#000000;
