@@ -48,7 +48,7 @@ class ArticleController extends Controller
      */
     public function actionIndex()
     {
-        $query = Article::find();
+        $query =Article::find()->orderBy(['date' => SORT_DESC]);
 
         $count = $query->count();
         $pagination = new Pagination(['totalCount' => $count, 'pageSize' => 6]);
@@ -100,8 +100,8 @@ class ArticleController extends Controller
             'categories' => $categories,
             'data' => $data,
             'articleImage' => $articleImage,
-            'category_all'=>$category_all,
-            ]);
+            'category_all' => $category_all,
+        ]);
     }
 
     public
