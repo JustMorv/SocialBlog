@@ -45,6 +45,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?php ActiveForm::end(); ?>
 
+            <?= Yii::t('app', 'Еще нет аккаутна?  ') . Html::a(Yii::t('app', 'Регистрация'), ['site/register'], ['class' => 'btn btn-primary']) ?>
+
 
         </div>
     </div>

@@ -145,9 +145,9 @@ a.desc:after {
     font-family: "Lexend", sans-serif;
     line-height: 1.5;
     min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    /*display: flex;*/
+    /*align-items: center;*/
+    /*justify-content: center;*/
     color: #393232;
 }
 
@@ -158,10 +158,10 @@ img {
 
 .card-list {
     width: 90%;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px; /* Adjust the gap between cards as needed */
-    justify-content: start;
+    /*display: flex;*/
+    /*flex-wrap: wrap;*/
+    /*gap: 16px; !* Adjust the gap between cards as needed *!*/
+    /*justify-content: start;*/
 }
 
 .card {
@@ -174,7 +174,7 @@ img {
     transition: .15s ease-in;
     flex: 1 1 calc(33.333% - 16px);
     box-sizing: border-box;
-    max-width: calc(33.333% - 16px);
+    /*max-width: calc(33.333% - 16px);*/
 
     &:hover, &:focus-within {
         box-shadow: 0 0 0 2px #16C79A, 0 10px 60px 0 rgba(0, 0, 0, 0.1);
