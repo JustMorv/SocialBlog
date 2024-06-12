@@ -75,8 +75,8 @@ class ArticleController extends Controller
         $model = $this->findModel($id);
         $commentForm = new CommentForm();
         $comments = Comment::find()
-            ->where(['status' => '0'])
-            ->andWhere(['article_id' => $id])
+            ->where(['status' => 0])
+            ->where(['article_id' => $id])
             ->orderBy(['date' => SORT_DESC])
             ->limit(10)
             ->with('user')
@@ -91,8 +91,6 @@ class ArticleController extends Controller
             $images[] = $articleImg->filename;
         }
         $data = array_merge(array($model->image), $images);
-        $category_all = Category::find()->all();
-        $model->viewedCounter();
 
         return $this->render('view', ['model' => $model,
             'commentForm' => $commentForm,
@@ -100,7 +98,7 @@ class ArticleController extends Controller
             'categories' => $categories,
             'data' => $data,
             'articleImage' => $articleImage,
-            'category_all'=>$category_all,
+
             ]);
     }
 

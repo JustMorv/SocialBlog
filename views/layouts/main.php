@@ -5,10 +5,12 @@
 /** @var string $content */
 
 use app\assets\AppAsset;
+use app\models\Category;
 use app\models\User;
 use app\widgets\Alert;
 use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
+
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
 use yii\helpers\Url;
@@ -21,6 +23,7 @@ $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, 
 $this->registerMetaTag(['name' => 'description', 'content' => $this->params['meta_description'] ?? '']);
 $this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_keywords'] ?? '']);
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/favicon.ico')]);
+$categories = Category::find()->all();
 ?>
 
 
@@ -33,6 +36,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 
     <?php $this->head() ?>
 </head>
+
+
 
 
 <body class="d-flex flex-column h-100">
@@ -87,33 +92,89 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             <li class="has-subnav">
                 <a href="#">
                     <i class="fa fa-comments fa-2x"></i>
-                    <span class="nav-text"><?= Yii::t('app', 'Сообщения') ?></span>
+                    <span class="nav-text">
+                            Group Hub Forums
+                        </span>
                 </a>
             </li>
-            <?php if (Yii::$app->user->identity) { ?>
-                <li class="has-subnav">
-                    <a href="<?= Url::to(['/user/profile']) ?>">
-                        <i class="fa fa-user fa-2x"></i>
-                        <span class="nav-text"><?= Yii::t('app', 'моя страница') ?></span>
-                    </a>
-                </li>
-            <?php } ?>
+<!--            <li class="has-subnav">-->
+<!--                <a href="#">-->
+<!--                    <i class="fa fa-camera-retro fa-2x"></i>-->
+<!--                    <span class="nav-text">-->
+<!--                            Survey Photos-->
+<!--                        </span>-->
+<!--                </a>-->
+<!---->
+<!--            </li>-->
+<!--            <li>-->
+<!--                <a href="#">-->
+<!--                    <i class="fa fa-film fa-2x"></i>-->
+<!--                    <span class="nav-text">-->
+<!--                            Surveying Tutorials-->
+<!--                        </span>-->
+<!--                </a>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                <a href="#">-->
+<!--                    <i class="fa fa-book fa-2x"></i>-->
+<!--                    <span class="nav-text">-->
+<!--                           Surveying Jobs-->
+<!--                        </span>-->
+<!--                </a>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                <a href="#">-->
+<!--                    <i class="fa fa-cogs fa-2x"></i>-->
+<!--                    <span class="nav-text">-->
+<!--                            Tools & Resources-->
+<!--                        </span>-->
+<!--                </a>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                <a href="#">-->
+<!--                    <i class="fa fa-map-marker fa-2x"></i>-->
+<!--                    <span class="nav-text">-->
+<!--                            Member Map-->
+<!--                        </span>-->
+<!--                </a>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                <a href="#">-->
+<!--                    <i class="fa fa-info fa-2x"></i>-->
+<!--                    <span class="nav-text">-->
+<!--                            Documentation-->
+<!--                        </span>-->
+<!--                </a>-->
+<!--            </li>-->
         </ul>
 
     </nav>
 
 
-    <div class="container pb-5 bg-light" >
-        <?php if (!empty($this->params['breadcrumbs'])): ?>
-            <div class=""style="margin-left: 40px">
-                <?= Html::tag('i', '', ['class' => 'nav-icon fa fa-home fa-2x fa-breadcrumbs ']) . Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
+    <div class="container d-flex flex-column flex-md-row">
+
+        <div class="d-flex flex-column order-md-1 ">
+            <div class=" content-area pb-4">
+                <?php if (!empty($this->params['breadcrumbs'])): ?>
+                    <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
+                <?php endif ?>
+                <?= Alert::widget() ?>
+                <?= $content ?>
             </div>
-        <?php endif ?>
-        <?= Alert::widget() ?>
-        <div class="container"><?= $content ?></div>
+            <nav class="sidebar-category pb-1 order-md-2 ">
+                <div class="nav flex-column  p-3 ">
+                    <?php foreach ($categories as $category): ?>
+                        <a href="<?= Url::to(['/post/article']) ?>" class="nav-link text-white mb-2 p-2 rounded"><?= $category->title ?></a>
+                    <?php endforeach; ?>
+                </div>
+            </nav>
+        </div>
+
     </div>
 
+
 </div>
+
 
 
 <footer id="footer" class="position-fixed bottom-0 w-100 py-3 bg-light ">
