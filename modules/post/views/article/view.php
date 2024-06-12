@@ -18,9 +18,10 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="article-view shadow-lg pe-5 mb-5 bg-white rounded">
     <div class="container container-title mb-4">
-        <p class="text-decoration-none  text-sm font-medium mt-5 pt-5  mb-4 ms-5 ">  <?php foreach ($categories as $category) { ?>
-                <?= Html::a($category->title, ['/post/article'], ['class' => 'btn btn-info']) ?>
-            <?php } ?><span class="mx-2">•</span><?= Html::encode($model->date) ?></p>
+        <p class="text-decoration-none  text-sm font-medium mt-5 pt-5  mb-4 ms-5 ">
+            <?php foreach ($categories as $category) { ?>
+                <?= Html::a($category->title, ['/post/article', 'id'=>$category->id], ['class' => 'btn btn-info w-25 ']) ?>
+            <?php } ?></p>
         <?php if (Yii::$app->user->id == $model->user_id){ ?>
         <p class="float-end mt-3">
             <?= Html::a('<i class="fas fa-edit"></i>', ['update', 'id' => $model->id], ['class' => 'btn btn-primary', 'title' => 'Update']) ?>
@@ -52,6 +53,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="article-content w-95 my-4 ms-sm-1">
             <p><?= Html::decode($model->content) ?></p>
         </div>
+        <div class="text-end">
+            <span class="mx-2"><?= Html::encode($model->date) ?></span>
+        </div>
 
         <div class="comments">
             <h2>Комментарии</h2>
@@ -71,6 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <p class="ml-2 d-flex justify-content-end">
                             <?= Yii::$app->formatter->asDate(strtotime(Html::encode($comment->date)), 'php:d F Y');?>
                         </p>
+
                         <?php if (Yii::$app->user->id === $model->user_id): ?>
                             <div class="btn-container d-flex justify-content-end">
                                 <?php if ($comment->status == $comment::STATUS_OK): ?>
@@ -89,6 +94,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <p>Комментариев пока нет.</p>
             <?php endif; ?>
         </div>
+
 
         <?php if (Yii::$app->user->identity == null){ ?>
             <div class="d-flex justify-content-end">

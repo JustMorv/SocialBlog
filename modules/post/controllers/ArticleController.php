@@ -48,7 +48,12 @@ class ArticleController extends Controller
      */
     public function actionIndex()
     {
-        $query =Article::find()->orderBy(['date' => SORT_DESC]);
+        if (Yii::$app->request->get('id')) {
+            $query = Article::find()->where(['category_id' => Yii::$app->request->get('id')])->orderBy(['date' => SORT_DESC]);
+        }else{
+            $query = Article::find()->orderBy(['date' => SORT_DESC]);
+        }
+
 
         $count = $query->count();
         $pagination = new Pagination(['totalCount' => $count, 'pageSize' => 6]);
