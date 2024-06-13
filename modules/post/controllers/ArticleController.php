@@ -55,17 +55,28 @@ class ArticleController extends Controller
         }
 
 
+
+        if (Yii::$app->request->get('category_id')){
+            $query->andWhere(['category_id' => Yii::$app->request->get('category_id')])->all();
+        }else{
+            $query->all();
+        }
+
+
         $count = $query->count();
         $pagination = new Pagination(['totalCount' => $count, 'pageSize' => 6]);
         $articles = $query->offset($pagination->offset)->limit($pagination->limit)->all();
         $commentForm = new CommentForm();
         $searchModel = new ArticleSeacrh();
+        $category_all=Category::find()->all();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'articles' => $articles,
             'commentForm' => $commentForm,
-            'pagination' => $pagination,]);
+            'pagination' => $pagination,
+            'category_all'=>$category_all,
+            ]);
     }
 
     /**

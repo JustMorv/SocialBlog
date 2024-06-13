@@ -52,7 +52,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                 <div class="avatar-container ">
                     <?= Html::img('@web/upload/' . User::getUserInfo()->photo, ['class' => 'avatar', 'onclick' => 'toggleDropdown()']) ?>
                     <div class="dropdown">
-                        <?= Html::a(Yii::t('app', 'Профиль'), Url::to(['user/profile']), ['']) ?>
+                        <?= Html::a(Yii::t('app', 'Профиль'), Url::to(['/user/profile']), ['']) ?>
                         <?= Html::a(Yii::t('app', 'Редактировать профиль'), Url::to(['user/upate']), ['']) ?>
                         <?= Html::beginForm(['/site/logout'], 'post')
                         . Html::submitButton(

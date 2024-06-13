@@ -17,6 +17,9 @@ use yii\helpers\Url;
             </p>
             <p><span class="label">Email:</span> <span class="value"><?= User::getUserInfo()->email ?></span></p>
         </div>
+        <?= Html::a(Yii::t('app', 'Редактировать профиль'), Url::to(['/user/update']), ['class' => 'btn btn-lg btn-success btn-rounded', '<span class="glyphicon glyphicon-edit"></span> ' . Yii::t('app', 'Редактировать профиль')]) ?>
+
+
     </div>
     <div class="container mt-5">
         <h3 class="h3 alert alert-success"> <?= Yii::t('app', 'Мои посты') ?></h3>

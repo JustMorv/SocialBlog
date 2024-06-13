@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Article;
 use app\models\ArticleSeacrh;
+use app\models\Category;
 use app\models\forms\CommentForm;
 use app\models\forms\RegisterForm;
 use Yii;
@@ -76,11 +77,13 @@ class SiteController extends Controller
         $articles = $query->offset($pagination->offset)->limit($pagination->limit)->all();
         $commentForm = new CommentForm();
         $searchModel = new ArticleSeacrh();
+        $category_all=Category::find()->all();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'articles' => $articles,
             'commentForm' => $commentForm,
-            'pagination' => $pagination,]);
+            'pagination' => $pagination,
+            'category_all' =>$category_all]);
     }
 
     public function actionSay($message = "hello")
