@@ -15,12 +15,14 @@ $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Articles', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
+
 ?>
-<div class="article-view shadow-lg pe-5 mb-5 bg-white rounded">
+<div class="container d-flex flex-row justify-content-center">
+<div class="article-view  w-100 shadow-lg pe-5 ms-sm-4 mb-5 bg-white rounded">
     <div class="container container-title mb-4">
-        <p class="text-decoration-none  text-sm font-medium mt-5 pt-5  mb-4 ms-5 ">
+        <p class="text-decoration-none  text-sm font-medium mt-3 pt-5  mb-4 ms-5 ">
             <?php foreach ($categories as $category) { ?>
-                <?= Html::a($category->title, ['/post/article', 'id'=>$category->id], ['class' => 'btn btn-info w-25 ']) ?>
+                <?= Html::a($category->title, ['/post/article', 'id' => $category->id], ['class' => 'btn btn-info w-20 ']) ?>
             <?php } ?></p>
         <?php if (Yii::$app->user->id == $model->user_id){ ?>
         <p class="float-end mt-3">
@@ -73,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         </p>
 
                         <p class="ml-2 d-flex justify-content-end">
-                            <?= Yii::$app->formatter->asDate(strtotime(Html::encode($comment->date)), 'php:d F Y');?>
+                            <?= Yii::$app->formatter->asDate(strtotime(Html::encode($comment->date)), 'php:d F Y'); ?>
                         </p>
 
                         <?php if (Yii::$app->user->id === $model->user_id): ?>
@@ -115,4 +117,17 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php ActiveForm::end(); ?>
             <?php } ?>
         </div>
+
     </div>
+</div>
+    <div class="sidebar-category pb-1 ms-4 ">
+        <div class="nav flex-column p-3">
+            <?php foreach ($category_all as $category): ?>
+                <a href="<?= Url::to(['/post/article', 'category_id' => $category->id]) ?>"
+                   class="nav-link text-white mb-2 p-2 rounded">
+                    <?= $category->title ?>
+                </a>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</div>

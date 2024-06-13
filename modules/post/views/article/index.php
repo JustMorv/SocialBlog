@@ -68,8 +68,10 @@ $this->params['breadcrumbs'][] = $this->title;
     //    ]); ?>
 
 
+    <div class="container-articles d-flex d-row">
 
-    <div class="container-articles">
+
+
         <div class="card-list">
             <?php foreach ($articles as $article): ?>
 
@@ -95,7 +97,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="card-footer">
                         <div class="card-meta card-meta--views">
                             <?= Html::encode($article->viewed) ?>
-                        </div>
+                        </div> <i class="fa fa-eye"></i>
                         <div class="card-meta card-meta--date">
                             <?= Yii::$app->formatter->asDate($article->date, 'medium') ?>
                         </div>
@@ -106,11 +108,21 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php endforeach; ?>
 
         </div>
-
+        <div class="sidebar-category pb-1 ms-4 ">
+            <div class="nav flex-column p-3">
+                <?php foreach ($category_all as $category): ?>
+                    <a href="<?= Url::to(['/post/article/', 'category_id' =>$category->id]) ?>" class="nav-link text-white mb-2 p-2 rounded"><?= $category->title ?></a>
+                <?php endforeach; ?>
+            </div>
+        </div>
     </div>
+
     <div class="col justify-content-center d-flex mb-4">
         <?= LinkPager::widget(['pagination' => $pagination]) ?>
     </div>
+
+
+
 
 </div>
 
