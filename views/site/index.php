@@ -111,7 +111,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="sidebar-category pb-1 ms-4 ">
             <div class="nav flex-column p-3">
                 <?php foreach ($category_all as $category): ?>
-                    <a href="<?= Url::to(['/post/article/', 'category_id' =>$category->id]) ?>" class="nav-link text-white mb-2 p-2 rounded"><?= $category->title ?></a>
+                    <a href="<?= Url::to(['/post/article/', 'category_id' =>$category->id]) ?>" class="nav-link text-white mb-2 p-2 rounded<?=Yii::$app->request->get("category_id")?'bg-info':'green-category'?>"><?= $category->title ?></a>
                 <?php endforeach; ?>
             </div>
         </div>
