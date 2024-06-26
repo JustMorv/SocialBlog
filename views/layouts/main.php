@@ -21,6 +21,8 @@ $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, 
 $this->registerMetaTag(['name' => 'description', 'content' => $this->params['meta_description'] ?? '']);
 $this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_keywords'] ?? '']);
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/favicon.ico')]);
+
+$currentAudio = Yii::$app->session->getFlash('currentAudio');
 ?>
 
 
@@ -35,6 +37,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 </head>
 
 
+<?=\yii\helpers\VarDumper::dump($currentAudio)?>
 <body class="d-flex flex-column h-100">
 <?php $this->beginBody() ?>
 
@@ -43,6 +46,19 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         <div class="logo-section d-flex align-items-center">
             <i class="fa fa-envelope-o" aria-hidden="true"></i>
             <span class="logo_name">Social Blog</span>
+        </div>
+        <div>
+            <?php if ($currentAudio): ?>
+                <div class="audio-player">
+                    <audio controls autoplay>
+                        <source src="<?= Yii::getAlias('@web/upload/tracks/' . $currentAudio->file_path) ?>"
+                                type="audio/mpeg">
+                    </audio>
+                    <div>
+                        <?= Html::encode($currentAudio->title) ?>
+                    </div>
+                </div>
+            <?php endif; ?>
         </div>
         <div class="login  d-flex align-items-center">
             <?php if (Yii::$app->user->isGuest) { ?>
@@ -71,6 +87,14 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <div class="container-fluid  ">
     <nav class="main-menu h-100 position-fixed ">
         <ul>
+            <?php if (Yii::$app->user->identity) { ?>
+                <li class="has-subnav">
+                    <a href="<?= Url::to(['/user/profile']) ?>">
+                        <i class="fa fa-user fa-2x"></i>
+                        <span class="nav-text"><?= Yii::t('app', 'моя страница') ?></span>
+                    </a>
+                </li>
+            <?php } ?>
             <li>
                 <a href="<?= Url::to(['/site/index']) ?>">
                     <i class="fa fa-home fa-2x"></i>
@@ -84,36 +108,45 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                     <span class="nav-text"><?= Yii::t('app', 'Статьи') ?></span>
                 </a>
             </li>
-            <li class="has-subnav">
-                <a href="#">
-                    <i class="fa fa-comments fa-2x"></i>
-                    <span class="nav-text"><?= Yii::t('app', 'Сообщения') ?></span>
-                </a>
-            </li>
             <?php if (Yii::$app->user->identity) { ?>
                 <li class="has-subnav">
-                    <a href="<?= Url::to(['/user/profile']) ?>">
-                        <i class="fa fa-user fa-2x"></i>
-                        <span class="nav-text"><?= Yii::t('app', 'моя страница') ?></span>
+                    <a href="<?= Url::to(['/chat/index']) ?>">
+                        <i class="fa fa-comments fa-2x"></i>
+                        <span class="nav-text"><?= Yii::t('app', 'Сообщения') ?></span>
                     </a>
                 </li>
             <?php } ?>
+
+
+            <li class="has-subnav">
+                <a href="<?= Url::to(['/music/audio/index']) ?>">
+                    <i class="fa fa-music fa-2x"></i>
+                    <span class="nav-text"><?= Yii::t('app', 'Музыка') ?></span>
+                </a>
+            </li>
+
         </ul>
 
     </nav>
-
-
-    <div class="container pb-5 bg-light" >
+    <?php \yii\widgets\Pjax::begin() ?>
+    <div class="container pb-5 bg-light">
         <?php if (!empty($this->params['breadcrumbs'])): ?>
-            <div class=""style="margin-left: 40px">
+            <div class="" style="margin-left: 40px">
                 <?= Html::tag('i', '', ['class' => 'nav-icon fa fa-home fa-2x fa-breadcrumbs ']) . Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
             </div>
         <?php endif ?>
         <?= Alert::widget() ?>
-        <div class="container"><?= $content ?></div>
+        <div class="container mt-3">
+            <?php \yii\widgets\Pjax::begin()?>
+            <?= $content ?>
+            <?php \yii\widgets\Pjax::end() ?>
+        </div>
     </div>
 
+
 </div>
+
+
 
 
 <footer id="footer" class="position-fixed bottom-0 w-100 py-3 bg-light ">
@@ -124,7 +157,14 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         </div>
     </div>
 </footer>
-
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const audioElement = document.getElementById('audioPlayer');
+        if (audioElement) {
+            audioElement.play();
+        }
+    });
+</script>
 <?php $this->endBody() ?>
 </body>
 </html>

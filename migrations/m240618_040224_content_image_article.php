@@ -12,16 +12,16 @@ class m240618_040224_content_image_article extends Migration
      */
     public function safeUp()
     {
-        $articles_images = json_decode(file_get_contents(__DIR__ . '/data/article_image.json'),true, 512,JSON_THROW_ON_ERROR);
-
-        if(!empty($articles_images)){
-            foreach ($articles_images as $image){
-                $this->insert('article_image',[
-                    'article_id'=>$image['article_id'],
-                    'filename'=>$image['filename'],
-                ]);
-            }
-        }
+//        $articles_images = json_decode(file_get_contents(__DIR__ . '/data/article_image.json'),true, 512,JSON_THROW_ON_ERROR);
+//
+//        if(!empty($articles_images)){
+//            foreach ($articles_images as $image){
+//                $this->insert('article_image',[
+//                    'article_id'=>$image['article_id'],
+//                    'filename'=>$image['filename'],
+//                ]);
+//            }
+//        }
     }
 
     /**

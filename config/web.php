@@ -17,6 +17,9 @@ $config = [
         'post' => [
             'class' => 'app\modules\post\Module',
         ],
+        'music' => [
+            'class' => 'app\modules\music\Module',
+        ],
     ],
     'components' => [
         'request' => [
@@ -62,6 +65,8 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'music' => 'music/index',
+                'music/play/<id:\d+>' => 'music/play',
             ],
         ],
     ],
