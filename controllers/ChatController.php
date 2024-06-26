@@ -7,6 +7,7 @@ use app\models\User;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\Response;
 
 class ChatController extends Controller
 {
@@ -51,6 +52,7 @@ class ChatController extends Controller
             'receiver_id' => $receiver_id,
         ]);
     }
+
     public function actionSend()
     {
         $message = new Messages();
@@ -63,8 +65,11 @@ class ChatController extends Controller
         }
         return $this->redirect(['index']);
     }
+
     public function actionFetchNewMessages()
     {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
         $lastMessageId = Yii::$app->request->get('last_message_id');
 
         $newMessages = Messages::find()
@@ -77,7 +82,6 @@ class ChatController extends Controller
             ->orderBy('created_at')
             ->all();
 
-        // Prepare data for JSON response
         $data = [];
         foreach ($newMessages as $message) {
             $data[] = [
@@ -88,7 +92,6 @@ class ChatController extends Controller
             ];
         }
 
-        return json_encode($data);
+        return $data;
     }
-
 }
