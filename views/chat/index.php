@@ -44,7 +44,7 @@ $this->title = Yii::t('app', 'Сообщения');
             <?php if (!empty($messages)): ?>
                 <ul class="list-group" id="message-list">
                     <?php foreach ($messages as $message): ?>
-                        <li class="list-group-item">
+                        <li class="list-group-item" data-message-id="<?= $message->id ?>">
                             <strong><?= Html::encode($message->sender->email) ?>:</strong>
                             <?= Html::encode($message->message) ?>
                             <small class="text-muted float-end"><?= Html::encode($message->created_at) ?></small>
@@ -63,33 +63,31 @@ $this->title = Yii::t('app', 'Сообщения');
 </div>
 
 <script>
-    $(document).ready(function() {
-        var lastMessageId = 0; // Store the ID of the last received message
-
-        function fetchNewMessages() {
-            $.ajax({
-                url: '/chat/fetch-new-messages', // Replace with your actual URL
-                data: { last_message_id: lastMessageId },
-                success: function(data) {
-                    if (data.length > 0) {
-                        // Update the chat window with new messages
-                        var messageList = $('#message-list');
-                        for (var i = 0; i < data.length; i++) {
-                            var message = data[i];
-                            // Create HTML elements for new messages
-                            var messageItem = $('<li class="list-group-item"></li>');
-                            messageItem.append('<strong>' + message.sender_email + ':</strong> ');
-                            messageItem.append(message.message);
-                            messageItem.append('<small class="text-muted float-end">' + message.created_at + '</small>');
-                            messageList.append(messageItem);
-                            lastMessageId = message.id; // Update last message ID
-                        }
-                    }
+    // Функция для получения последних сообщений
+    function fetchNewMessages() {
+        var lastMessageId = $('#message-list li:last').data('message-id');
+        $.ajax({
+            url: '<?= \yii\helpers\Url::to(['fetch-new-messages']) ?>',
+            method: 'GET',
+            data: {
+                last_message_id: lastMessageId
+            },
+            success: function (data) {
+                if (Array.isArray(data)) {
+                    data.forEach(function (message) {
+                        $('#message-list').append(
+                            '<li class="list-group-item" data-message-id="' + message.id + '">' +
+                            '<strong>' + message.sender_email + ':</strong> ' +
+                            message.message +
+                            '<small class="text-muted float-end">' + message.created_at + '</small>' +
+                            '</li>'
+                        );
+                    });
                 }
-            });
-        }
+            }
+        });
+    }
 
-        fetchNewMessages(); // Call initially
-        setInterval(fetchNewMessages, 5000); // Check for new messages every 5 seconds
-    });
+    setInterval(fetchNewMessages, 1000);
+
 </script>
